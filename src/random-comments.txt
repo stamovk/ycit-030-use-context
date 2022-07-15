@@ -1,0 +1,27 @@
+
+    // In the real world, instead of using "initialUsers" we would do the "useEffect-fetch" pattern
+    // useEffect(() => {
+    //     fetch("/users")
+    //         .then((res) => res.json())
+    //         .then((data) => setUsers(data))
+    // }, [])
+
+    // For the "best" card, we will invent a function with limited capability. And we will pass this function down to the children instead
+
+
+
+    // You can comment out the useCallback version and uncomment the above version and the app will run the same (~20us slower)
+
+    // To freeze the function reference, we can wrap it in useCallback and pass the users into its dependency array
+    // const updateIsAdminForBestCard = useCallback(
+    //     function (email, isChecked) {
+    //         const newArrayOfUsers = produce((draft) => {
+    //             const foundUser = draft.find((el) => el.email === email)
+
+    //             foundUser.isAdmin = isChecked
+    //         }, users)
+
+    //         setUsers(newArrayOfUsers)
+    //     },
+    //     [users]
+    // )

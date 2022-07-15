@@ -1,56 +1,12 @@
 import produce from "immer"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { BadCard } from "./components/BadCard"
 import { BestCard } from "./components/BestCard"
 import { BetterCard } from "./components/BetterCard"
-
-const initialUsers = [
-    { name: "Bobby", email: "bob@bob.com", isAdmin: false }, // { name: "Bobby", email: "bob@bob.com", isAdmin: false } // This is what happens when you don't use immer
-    // { name: "Bobby", email: "bob@bob.com", isAdmin: true }, // { name: "Bobby", email: "bob@bob.com", isAdmin: false } // With IMMER
-    { name: "Soheyl", email: "Soheyl@Soheyl.com", isAdmin: false },
-    { name: "Claudia", email: "Claudia@Claudia.com", isAdmin: false },
-    { name: "Mercy", email: "Mercy@Mercy.com", isAdmin: false },
-    { name: "Akram", email: "Akram@Akram.com", isAdmin: false },
-    { name: "Konstantin", email: "Konstantin@Konstantin.com", isAdmin: false },
-]
+import { usersContext } from "./UsersProvider"
 
 export function App() {
-    const [users, setUsers] = useState(initialUsers)
-
-    // In the real world, instead of using "initialUsers" we would do the "useEffect-fetch" pattern
-    // useEffect(() => {
-    //     fetch("/users")
-    //         .then((res) => res.json())
-    //         .then((data) => setUsers(data))
-    // }, [])
-
-    // For the "best" card, we will invent a function with limited capability. And we will pass this function down to the children instead
-
-    // function updateIsAdminForBestCard(email, isChecked) {
-    //     const newArrayOfUsers = produce((draft) => {
-    //         const foundUser = draft.find((el) => el.email === email)
-
-    //         foundUser.isAdmin = isChecked
-    //     }, users)
-
-    //     setUsers(newArrayOfUsers)
-    // }
-
-    // You can comment out the useCallback version and uncomment the above version and the app will run the same (~20us slower)
-
-    // To freeze the function reference, we can wrap it in useCallback and pass the users into its dependency array
-    const updateIsAdminForBestCard = useCallback(
-        function (email, isChecked) {
-            const newArrayOfUsers = produce((draft) => {
-                const foundUser = draft.find((el) => el.email === email)
-
-                foundUser.isAdmin = isChecked
-            }, users)
-
-            setUsers(newArrayOfUsers)
-        },
-        [users]
-    )
+    const { users, setUsers } = useContext(usersContext)
 
     return (
         <div className="App">
@@ -87,9 +43,6 @@ export function App() {
                     <BestCard
                         key={`user-${user.email}`}
                         {...user}
-                        users={users}
-                        setUsers={setUsers}
-                        updateIsAdminForBestCard={updateIsAdminForBestCard}
                         allowCheckbox
                     />
                 )

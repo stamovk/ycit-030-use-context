@@ -1,8 +1,11 @@
 import produce from "immer"
+import { useContext } from "react"
+import { usersContext } from "../UsersProvider"
 
 export function BestCard(props) {
-    const { name, email, isAdmin, allowCheckbox, updateIsAdminForBestCard } =
-        props
+    const { name, email, isAdmin, allowCheckbox } = props
+
+    const { updateIsAdminForBestCard } = useContext(usersContext)
 
     return (
         <div className="card">
