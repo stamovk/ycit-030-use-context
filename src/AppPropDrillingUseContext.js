@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useMemo, useState } from "react"
 
 // export function AppPropDrilling() {
 //     const [state, setState] = useState(3)
@@ -20,6 +20,8 @@ import React, { useContext, useState } from "react"
 
 // Now using useContext
 
+let myOtherState = "blabla"
+
 const numContext = React.createContext(null)
 
 export function AppUseContext() {
@@ -27,15 +29,37 @@ export function AppUseContext() {
 
     const { Provider } = numContext
 
+    useEffect(() => {
+        myOtherState = "changed to something else"
+
+        setTimeout(() => {
+            setState(55)
+        }, 2000)
+    }, [])
+
     return (
         <Provider value={state}>
+            <SideComponent />
             <Level1 num={state} />
         </Provider>
     )
 }
 
+function SideComponent() {
+    console.log("Hi, I'm the side component and I rerendered")
+
+    return <div>Side component</div>
+}
+
 function Level1() {
-    return <Level2 />
+    console.log("Hi, I'm level 1 and I rerendered")
+
+    return (
+        <div>
+            {myOtherState}
+            <Level2 />
+        </div>
+    )
 }
 
 function Level2() {
@@ -43,6 +67,8 @@ function Level2() {
 }
 
 function Level3() {
+    console.log("Hi, I'm level 3 and I rerendered")
+
     const num = useContext(numContext)
 
     return <div>YAY! {num}</div>
