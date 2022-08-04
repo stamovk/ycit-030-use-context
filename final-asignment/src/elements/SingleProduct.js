@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 export function SingleProduct() {
     const [singleProduct, setSingleProduct] = useState([])
-
+    let navigate = useNavigate()
     const { id } = useParams()
     // console.log(id)
 
@@ -18,7 +18,14 @@ export function SingleProduct() {
 
     return (
         <>
-            <div>Hi, from all products</div>
+            <div>Hi, from single product id: {id}</div>
+            <button
+                onClick={() => {
+                    navigate("/allProducts")
+                }}
+            >
+                Go back to all products
+            </button>
             <div className="ProductGrid">
                 <div className="Product">
                     <h2>{singleProduct.title}</h2>

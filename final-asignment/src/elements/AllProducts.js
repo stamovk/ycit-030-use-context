@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import "../styles.css"
+import { Link } from "react-router-dom"
 
 export function AllProducts() {
     const [products, setProducts] = useState([])
@@ -19,10 +20,12 @@ export function AllProducts() {
             <div className="ProductGrid">
                 {products.map((product) => {
                     return (
-                        <div className="Product" key={product.id}>
-                            <h2>{product.title}</h2>
-                            <img src={product.image} alt="imageOfProduct" />
-                        </div>
+                        <Link to={`/allProducts/${product.id}`}>
+                            <div className="Product" key={product.id}>
+                                <h2>{product.title}</h2>
+                                <img src={product.image} alt="imageOfProduct" />
+                            </div>
+                        </Link>
                     )
                 })}
             </div>

@@ -25,10 +25,7 @@ export function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="allProducts" element={<AllProducts />} />
-                    <Route
-                        path="singleProduct/:id"
-                        element={<SingleProduct />}
-                    />
+                    <Route path="allProducts/:id" element={<SingleProduct />} />
                 </Routes>
             </div>
         </>

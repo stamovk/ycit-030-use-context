@@ -9,9 +9,4 @@ export const navbarItems = [
         name: "allProducts",
         label: "All Products",
     },
-    {
-        key: "item-3",
-        name: "singleProduct/4",
-        label: "SingleProduct",
-    },
 ]
